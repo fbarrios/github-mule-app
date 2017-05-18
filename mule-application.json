@@ -1,0 +1,19 @@
+{
+  "configs": [
+    "github-mule-app.xml"
+  ],
+  "domain": "default",
+  "redeploymentEnabled": true,
+  "name": "github-mule-app",
+  "minMuleVersion": "4.0.0-SNAPSHOT",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "maven",
+    "attributes": {
+      "exportedResources": []
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "maven",
+    "attributes": {}
+  }
+}
