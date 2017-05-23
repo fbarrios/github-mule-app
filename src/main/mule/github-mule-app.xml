@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <mule
-    xmlns:http="http://www.mulesoft.org/schema/mule/http"
     xmlns="http://www.mulesoft.org/schema/mule/core"
-    xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-    xmlns:spring="http://www.springframework.org/schema/beans"
+    xmlns:http="http://www.mulesoft.org/schema/mule/http"
+    xmlns:github="http://www.mulesoft.org/schema/mule/github"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="
-      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
-      http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-      http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+          http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+          http://www.mulesoft.org/schema/mule/github http://www.mulesoft.org/schema/mule/github/current/github.xsd
+          http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
 
-      <http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" >
-          <http:listener-connection host="localhost" port="8081" />
-        </http:listener-config>
+    <github:config name="githubConfig" host="api.github.com" port="443" basePath="/" username="" password=""/>
 
-    <github-module:config name="Github_module_Config" baseUri="https://api.github.com" username="${github.username}" password="${github.password}" doc:name="Github-module Config" />
+    <http:listener-config name="listenerConfig">
+        <http:listener-connection host="localhost" port="8081"/>
+    </http:listener-config>
 
-    <flow name="github-mule-appFlow" >
-         <http:listener config-ref="HTTP_Listener_config" path="/" doc:name="Listener" />
-         <github-module:get-issues config-ref="Github_module_Config" q="repo:fbarrios/module-github" sort="allala" order="lalalal" doc:name="Get issues" />
+    <flow name="httpFlow">
+        <!-- sample flow to hit the application from outside -->
+        <http:listener config-ref="listenerConfig" path="/"/>
+        <github:get-issues config-ref="githubConfig" q="repo:fernandezlautaro/module-github"/>
     </flow>
 
 </mule>
